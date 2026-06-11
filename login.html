@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Spotify</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ==========================================================================
+   GLOBAL CONFIGURATIONS & COMPONENT VARIABLES
+   ========================================================================== */
+:root {
+    --bg-black: #000000;
+    --bg-card: #121212;
+    --bg-input: #1a1a1a;
+    --bg-input-hover: #242424;
+    --text-main: #ffffff;
+    --text-muted: #b3b3b3;
+    --spotify-green: #1db954;
+    --spotify-green-hover: #1ed760;
+    --error-red: #f15555;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-main);
+    font-family: "Montserrat", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   HEADER CONTROLS
+   ========================================================================== */
+.login-header {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.login-header .logo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: -1px;
+    cursor: pointer;
+}
+
+.login-header .logo i {
+    font-size: 2.8rem;
+}
+
+/* ==========================================================================
+   LOGIN CARD WRAPPER & FORM COMPONENT
+   ========================================================================== */
+.login-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 1rem 4rem 1rem;
+}
+
+.login-card {
+    background-color: var(--bg-card);
+    width: 100%;
+    max-width: 450px;
+    padding: 3.5rem 3rem;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.login-card h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.75px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* CORE INPUT DEPLOYMENT HOOKS */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.input-group input {
+    background-color: var(--bg-input);
+    border: 1px solid #727272;
+    color: var(--text-main);
+    height: 3rem;
+    padding: 0 1rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.input-group input:hover {
+    background-color: var(--bg-input-hover);
+    border-color: #a7a7a7;
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: var(--bg-input-hover);
+    border: 2px solid var(--text-main);
+    padding: 0 0.93rem; /* Compensates layout rendering thickness logic shift */
+}
+
+/* Invalid State Error Highlights */
+.input-group.invalid input {
+    border: 2px solid var(--error-red) !important;
+    padding: 0 0.93rem;
+}
+
+.error-msg {
+    color: var(--error-red);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.4rem;
+    display: none;
+}
+
+/* SECURE WRAPPER FOR TOGGLE SYSTEM ICON */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 3rem !important;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+
+.toggle-password:hover {
+    color: var(--text-main);
+}
+
+/* CTA PRIMARY ACTION SUBMIT BUTTON */
+.submit-btn {
+    width: 100%;
+    height: 3rem;
+    background-color: var(--spotify-green);
+    color: #000000;
+    border: none;
+    border-radius: 500px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: scale(1.03);
+    background-color: var(--spotify-green-hover);
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* FOOTER SPLIT STRIP LINKS */
+.divider {
+    height: 1px;
+    background-color: #292929;
+    margin: 2.5rem 0 2rem 0;
+}
+
+.signup-redirect {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-align: center;
+    font-weight: 500;
+}
+
+.signup-redirect a {
+    color: var(--text-main);
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.signup-redirect a:hover {
+    color: var(--spotify-green);
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT RESPONSIVENESS ENGINE
+   ========================================================================== */
+@media (max-width: 480px) {
+    .login-header {
+        padding: 1.5rem;
+    }
+    .login-container {
+        padding: 0;
+    }
+    .login-card {
+        border-radius: 0;
+        box-shadow: none;
+        padding: 2.5rem 1.5rem;
+        background-color: var(--bg-black); /* Cards flush flat with viewport on tiny mobile viewports */
+    }
+}
+    </style>
+</head>
+<body>
+
+    <header class="login-header">
+        <div class="logo" onclick="window.location.href='index.html'">
+            <i class="fa-brands fa-spotify"></i>
+            <span>Spotify</span>
+        </div>
+    </header>
+
+    <main class="login-container">
+        <div class="login-card">
+            <h1>Log in to Spotify</h1>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="loginIdentifier">Email or username</label>
+                    <input type="text" id="loginIdentifier" placeholder="Email or username" required autocomplete="username">
+                    <span class="error-msg" id="identifierError"></span>
+                </div>
+
+                <div class="input-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+                        <i class="fa-regular fa-eye-slash toggle-password" id="togglePassword"></i>
+                    </div>
+                    <span class="error-msg" id="passwordError"></span>
+                </div>
+
+                <button type="submit" class="submit-btn">Log In</button>
+            </form>
+
+            <div class="divider"></div>
+
+            <p class="signup-redirect">
+                Don't have an account? <a href="signup.html">Sign up for Spotify</a>
+            </p>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    const identifierInput = document.getElementById('loginIdentifier');
+    const passwordInput = document.getElementById('loginPassword');
+    const togglePassword = document.getElementById('togglePassword');
+
+    // ==========================================================================
+    // INTERACTIVE PASS SHOW/HIDE CONTROLLER
+    // ==========================================================================
+    togglePassword.addEventListener('click', () => {
+        const isMaskedState = passwordInput.getAttribute('type') === 'password';
+        
+        if (isMaskedState) {
+            passwordInput.setAttribute('type', 'text');
+            togglePassword.classList.remove('fa-eye-slash');
+            togglePassword.classList.add('fa-eye');
+        } else {
+            passwordInput.setAttribute('type', 'password');
+            togglePassword.classList.remove('fa-eye');
+            togglePassword.classList.add('fa-eye-slash');
+        }
+    });
+
+    // ==========================================================================
+    // VALIDATION SUBROUTINE TOOLS
+    // ==========================================================================
+    function applyValidationError(inputField, errorTextElement, message) {
+        const parentGroup = inputField.closest('.input-group');
+        parentGroup.classList.add('invalid');
+        errorTextElement.innerText = message;
+        errorTextElement.style.display = 'block';
+    }
+
+    function removeValidationError(inputField, errorTextElement) {
+        const parentGroup = inputField.closest('.input-group');
+        parentGroup.classList.remove('invalid');
+        errorTextElement.innerText = '';
+        errorTextElement.style.display = 'none';
+    }
+
+    function checkIdentifierField() {
+        const value = identifierInput.value.trim();
+        const errorSpan = document.getElementById('identifierError');
+
+        if (value === "") {
+            applyValidationError(identifierInput, errorSpan, "Please enter your Spotify username or email address.");
+            return false;
+        }
+        removeValidationError(identifierInput, errorSpan);
+        return true;
+    }
+
+    function checkPasswordField() {
+        const value = passwordInput.value;
+        const errorSpan = document.getElementById('passwordError');
+
+        if (value === "") {
+            applyValidationError(passwordInput, errorSpan, "Please enter your password.");
+            return false;
+        }
+        removeValidationError(passwordInput, errorSpan);
+        return true;
+    }
+
+    // Dynamic cleanups as user types inside inputs
+    identifierInput.addEventListener('input', checkIdentifierField);
+    passwordInput.addEventListener('input', checkPasswordField);
+
+    // ==========================================================================
+    // INTERCEPT COMPLETED SUBMISSION PACKETS
+    // ==========================================================================
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const isUserValid = checkIdentifierField();
+        const isPassValid = checkPasswordField();
+
+        if (isUserValid && isPassValid) {
+            alert('Logging you in smoothly...');
+            // Redirect straight inside the functional clone music workspace player index
+            window.location.href = 'index.html';
+        }
+    });
+});
+    </script>
+</body>
+</html>

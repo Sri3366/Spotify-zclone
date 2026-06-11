@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Premium Plans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ==========================================================================
+   THEME CONFIGURATION VARIABLES & GLOBAL BASE
+   ========================================================================== */
+:root {
+    --bg-black: #000000;
+    --bg-base: #121212;
+    --bg-card: #1c1c1c;
+    --text-main: #ffffff;
+    --text-muted: #b3b3b3;
+    --spotify-green: #1db954;
+    --spotify-green-hover: #1ed760;
+    --premium-gradient: linear-gradient(135deg, #1d5231 0%, #0d2617 100%);
+    --card-gradient-accent: linear-gradient(180deg, #222222 0%, #1c1c1c 100%);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-main);
+    font-family: "Montserrat", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   NAVIGATION TOP ACCENT BAR
+   ========================================================================== */
+.premium-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4.5rem;
+    padding: 0 4rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+}
+
+.premium-nav .logo {
+    font-size: 2.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+}
+
+.back-btn {
+    background: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-main);
+    padding: 0.6rem 1.2rem;
+    border-radius: 500px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    transform: scale(1.04);
+    border-color: var(--text-main);
+}
+
+/* ==========================================================================
+   HERO CALL-TO-ACTION CONTAINER
+   ========================================================================== */
+.premium-hero {
+    background: var(--premium-gradient);
+    padding: 6rem 4rem;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.badge {
+    background-color: #0d2617;
+    border: 1px solid var(--spotify-green);
+    color: var(--spotify-green-hover);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin: 1.5rem 0 1rem 0;
+    line-height: 1.15;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #e0e0e0;
+    margin-bottom: 2.5rem;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary, .btn-secondary {
+    text-decoration: none;
+    height: 3.2rem;
+    padding: 0 2rem;
+    border-radius: 500px;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: transform 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--text-main);
+    color: var(--bg-black);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-main);
+    border: 2px solid #727272;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    transform: scale(1.04);
+}
+
+.btn-secondary:hover {
+    border-color: var(--text-main);
+}
+
+.terms {
+    font-size: 0.75rem;
+    color: #a7a7a7;
+}
+
+/* ==========================================================================
+   PRICING PLANS FLEXIBLE GRID MATRIX
+   ========================================================================== */
+.plans-container {
+    max-width: 1200px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.plans-container h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+}
+
+.sub-heading {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 4rem;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: start;
+}
+
+.plan-card {
+    background: var(--card-gradient-accent);
+    border-radius: 10px;
+    padding: 2.5rem 2rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 520px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease;
+}
+
+/* Highlight visual wrapper styling rules for the Duo plan card */
+.plan-card.popular {
+    border: 2px solid #2e7d4c;
+    position: relative;
+    transform: translateY(-5px);
+}
+
+.plan-card:hover {
+    transform: translateY(-8px);
+}
+
+.free-period {
+    background-color: #333;
+    color: var(--text-main);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.free-period.highlight {
+    background-color: #2e7d4c;
+}
+
+.plan-card h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 1.5rem 0 0.25rem 0;
+}
+
+.price {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.account-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+}
+
+.divider {
+    height: 1px;
+    background-color: #2b2b2b;
+    margin: 1.5rem 0;
+}
+
+/* CARD FEATURES METRIC BLOCK LIST */
+.features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-content: 1;
+    flex: 1; /* Pushes the dynamic action button uniformly down to the footer base margin */
+}
+
+.features-list li {
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    line-height: 1.4;
+}
+
+.features-list li i {
+    color: var(--spotify-green);
+    font-size: 1rem;
+    margin-top: 0.15rem;
+}
+
+/* CUSTOM BUTTON SWITCH FOR INNER PLANS CONTROLS */
+.plan-btn {
+    width: 100%;
+    height: 3rem;
+    background-color: transparent;
+    color: var(--text-main);
+    border: 2px solid var(--text-muted);
+    border-radius: 500px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 1rem;
+}
+
+.plan-btn.alternative {
+    background-color: var(--text-main);
+    color: var(--bg-black);
+    border: none;
+}
+
+.plan-btn:hover {
+    transform: scale(1.03);
+    border-color: var(--text-main);
+}
+
+.plan-btn.alternative:hover {
+    background-color: #f6f6f6;
+}
+
+.card-terms {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT ENGINE VIEWPOTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .plans-grid {
+        grid-template-columns: repeat(2, 1fr); /* Collapses down to dual layout pairs on compact desktops */
+    }
+    .plan-card.popular {
+        transform: none; /* Disables elevated desktop transformation alignment metrics */
+    }
+    .plan-card.popular:hover {
+        transform: translateY(-8px);
+    }
+}
+
+@media (max-width: 768px) {
+    .premium-nav {
+        padding: 0 1.5rem;
+    }
+    .premium-hero {
+        padding: 4rem 1.5rem;
+    }
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    .hero-btns {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+    }
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+    }
+    .plans-grid {
+        grid-template-columns: 1fr; /* Full width tracking lines on mobile screens */
+    }
+    .plans-container h2 {
+        font-size: 2rem;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <nav class="premium-nav">
+        <div class="logo" onclick="window.location.href='index.html'">
+            <i class="fa-brands fa-spotify"></i>
+            <span>Spotify</span>
+        </div>
+        <button class="back-btn" onclick="window.location.href='index.html'">Back to Player</button>
+    </nav>
+
+    <header class="premium-hero">
+        <div class="hero-content">
+            <span class="badge">Limited Time Offer</span>
+            <h1>Experience the full power of Premium</h1>
+            <p>Ad-free music listening, offline playback, and unlimited skips. Cancel anytime.</p>
+            <div class="hero-btns">
+                <a href="#plans" class="btn-primary">View All Plans</a>
+                <a href="#" class="btn-secondary">Get 3 Months Free</a>
+            </div>
+            <p class="terms">*Individual plan only. ₹119/month after. Terms and conditions apply.</p>
+        </div>
+    </header>
+
+    <main class="plans-container" id="plans">
+        <h2>Choose your Premium</h2>
+        <p class="sub-heading">Listen without limits on your phone, speaker, and other devices.</p>
+
+        <div class="plans-grid">
+            <div class="plan-card">
+                <div class="card-header">
+                    <span class="free-period">Free for 3 months</span>
+                    <h3>Individual</h3>
+                    <p class="price">₹119 / month</p>
+                    <p class="account-count">1 account</p>
+                </div>
+                <div class="divider"></div>
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-check"></i> Ad-free music listening</li>
+                    <li><i class="fa-solid fa-check"></i> Download to listen offline</li>
+                    <li><i class="fa-solid fa-check"></i> Play songs in any order</li>
+                    <li><i class="fa-solid fa-check"></i> High audio quality settings</li>
+                </ul>
+                <button class="plan-btn">Get Started</button>
+                <p class="card-terms">Free for 3 months, then ₹119 a month after. Cancel anytime.</p>
+            </div>
+
+            <div class="plan-card popular">
+                <div class="card-header">
+                    <span class="free-period highlight">Free for 1 month</span>
+                    <h3>Duo</h3>
+                    <p class="price">₹149 / month</p>
+                    <p class="account-count">2 accounts</p>
+                </div>
+                <div class="divider"></div>
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-check"></i> 2 Premium accounts for a couple</li>
+                    <li><i class="fa-solid fa-check"></i> Ad-free music listening offline</li>
+                    <li><i class="fa-solid fa-check"></i> Shared playlist options</li>
+                    <li><i class="fa-solid fa-check"></i> On-demand audio playback</li>
+                </ul>
+                <button class="plan-btn alternative">Get Started</button>
+                <p class="card-terms">Free for 1 month, then ₹149 a month after. Designed for two people living together.</p>
+            </div>
+
+            <div class="plan-card">
+                <div class="card-header">
+                    <span class="free-period">Free for 1 month</span>
+                    <h3>Family</h3>
+                    <p class="price">₹179 / month</p>
+                    <p class="account-count">Up to 6 accounts</p>
+                </div>
+                <div class="divider"></div>
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-check"></i> 6 Premium accounts for family members</li>
+                    <li><i class="fa-solid fa-check"></i> Block explicit music controls</li>
+                    <li><i class="fa-solid fa-check"></i> Download tracks to listen offline</li>
+                    <li><i class="fa-solid fa-check"></i> Separate profiles for everyone</li>
+                </ul>
+                <button class="plan-btn">Get Started</button>
+                <p class="card-terms">Free for 1 month, then ₹179 a month after. For family members living under one roof.</p>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

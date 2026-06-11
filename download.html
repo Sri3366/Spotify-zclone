@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Spotify - Music Player</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <style>
+        /* ==========================================================================
+   THEME REUSE SYSTEM & VARIABLES
+   ========================================================================== */
+:root {
+    --color-black: #000000;
+    --color-dark-gray: #121212;
+    --color-card-gray: #181818;
+    --color-card-hover: #282828;
+    --color-white: #ffffff;
+    --color-muted: #b3b3b3;
+    --spotify-green: #1db954;
+    --spotify-green-hover: #1ed760;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    font-family: "Montserrat", "Poppins", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   NAVIGATION SYNC REUSE LAYOUT
+   ========================================================================== */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-black);
+    padding: 10px 32px;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.left-half {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    font-size: 32px;
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+.home-icon {
+    font-size: 20px;
+    background-color: #1f1f1f;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.home-icon:hover {
+    transform: scale(1.05);
+    color: var(--color-white);
+}
+
+.right-half {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.right-half-p1, .right-half-p2 {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.nav-text:hover, .nav-text.active {
+    color: var(--color-white);
+    transform: scale(1.03);
+}
+
+.login-btn {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    border: none;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.login-btn:hover {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   HERO CALL-TO-ACTION DISPLAY PANEL
+   ========================================================================== */
+.download-hero {
+    background: linear-gradient(180deg, #1e462b 0%, var(--color-black) 100%);
+    padding: 96px 24px;
+    text-align: center;
+}
+
+.hero-container {
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.device-icon-wrapper {
+    margin-bottom: 24px;
+}
+
+.download-main-icon {
+    font-size: 72px;
+    color: var(--spotify-green);
+    animation: pulseIcon 4s infinite ease-in-out;
+}
+
+.download-hero h1 {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.download-hero p {
+    color: var(--color-muted);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.dl-primary-btn {
+    background-color: var(--spotify-green);
+    color: var(--color-black);
+    border: none;
+    padding: 16px 40px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.dl-primary-btn:hover {
+    transform: scale(1.04);
+    background-color: var(--spotify-green-hover);
+}
+
+.dl-primary-btn:active {
+    transform: scale(0.98);
+}
+
+.meta-txt {
+    font-size: 11px !important;
+    margin-top: 12px;
+    color: #727272 !important;
+}
+
+/* ==========================================================================
+   PLATFORM MATRIX LIST GRID
+   ========================================================================== */
+.platform-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 24px;
+    text-align: center;
+}
+
+.platform-section h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+}
+
+.sub-heading {
+    color: var(--color-muted);
+    font-size: 14px;
+    max-width: 600px;
+    margin: 0 auto 48px auto;
+    line-height: 1.5;
+}
+
+.platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.platform-card {
+    background-color: var(--color-dark-gray);
+    border-radius: 8px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.platform-card:hover {
+    background-color: var(--color-card-hover);
+    transform: translateY(-4px);
+}
+
+.platform-icon {
+    font-size: 40px;
+    color: var(--color-white);
+    margin-bottom: 16px;
+}
+
+.platform-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.platform-card p {
+    color: var(--color-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    min-height: 60px; /* Aligns buttons cleanly across columns */
+}
+
+.platform-link {
+    color: var(--color-white);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid var(--color-muted);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.platform-link:hover {
+    color: var(--spotify-green);
+    border-color: var(--spotify-green);
+}
+
+/* ==========================================================================
+   EXTRA BENEFITS ACCENT BANNER
+   ========================================================================== */
+.benefits-banner {
+    background-color: var(--color-dark-gray);
+    max-width: 1100px;
+    margin: 0 auto 80px auto;
+    border-radius: 8px;
+    padding: 40px;
+    display: flex;
+    justify-content: space-around;
+    gap: 40px;
+}
+
+.benefit-item {
+    text-align: center;
+    max-width: 400px;
+}
+
+.benefit-item i {
+    font-size: 28px;
+    color: var(--spotify-green);
+    margin-bottom: 12px;
+}
+
+.benefit-item h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.benefit-item p {
+    color: var(--color-muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT MATRIX CONTROLS
+   ========================================================================== */
+@keyframes pulseIcon {
+    0%, 100% { opacity: 0.9; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.03); }
+}
+
+@media (max-width: 900px) {
+    .platform-grid {
+        grid-template-columns: 1fr;
+    }
+    .benefits-banner {
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        padding: 10px 16px;
+    }
+    .right-half {
+        gap: 16px;
+    }
+    .right-half-p1 {
+        display: none; /* Auto hides link rows smoothly for mobile screen safety */
+    }
+    .download-hero h1 {
+        font-size: 28px;
+    }
+    .download-hero p {
+        font-size: 14px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="left-half">
+            <div class="logo" onclick="window.location.href='index.html'"><i class="fa-brands fa-spotify"></i></div>
+            <div class="home-icon" onclick="window.location.href='index.html'"><i class="fa-solid fa-house"></i></div>
+        </div>
+        <div class="right-half">
+            <div class="right-half-p1">
+                <p class="nav-text" onclick="window.location.href='premium.html'">Premium</p>
+                <p class="nav-text" onclick="window.location.href='support.html'">Support</p>
+                <p class="nav-text active">Download</p>
+            </div>
+            <div class="right-half-p2">
+                <div class="nav-text" onclick="window.location.href='signup.html'">Sign up</div>
+                <button class="login-btn" onclick="window.location.href='login.html'">Log in</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="download-hero">
+        <div class="hero-container">
+            <div class="device-icon-wrapper">
+                <i class="fa-solid fa-laptop-code download-main-icon"></i>
+            </div>
+            <h1>Download Spotify for your Desktop Workspace</h1>
+            <p>Stream your favorite tracks, compile expansive custom playlists, and explore local files seamlessly with a dedicated desktop engine layout.</p>
+            <button class="dl-primary-btn">
+                <i class="fa-solid fa-circle-arrow-down"></i> Download Latest Build
+            </button>
+            <p class="meta-txt">Supports Windows 10/11 x64 and macOS 11 or higher binaries.</p>
+        </div>
+    </main>
+
+    <section class="platform-section">
+        <h2>Bring your music across all execution devices</h2>
+        <p class="sub-heading">One single active stream tracking account seamlessly synchronizes desktop audio caches with your phone, tablet, or web instance.</p>
+        
+        <div class="platform-grid">
+            <div class="platform-card">
+                <i class="fa-brands fa-apple platform-icon"></i>
+                <h3>macOS Architecture</h3>
+                <p>Optimized package files compiled natively for Apple Silicon and Intel systems.</p>
+                <a href="#" class="platform-link">Download .dmg</a>
+            </div>
+
+            <div class="platform-card">
+                <i class="fa-brands fa-windows platform-icon"></i>
+                <h3>Windows Operating OS</h3>
+                <p>Standard stable executable framework installer containing self-updating assets.</p>
+                <a href="#" class="platform-link">Download .exe</a>
+            </div>
+
+            <div class="platform-card">
+                <i class="fa-brands fa-android platform-icon"></i>
+                <h3>Mobile Application</h3>
+                <p>Take your playlist arrays with you offline with our dynamic Android and iOS structures.</p>
+                <a href="#" class="platform-link">Get Portable App</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-banner">
+        <div class="benefit-item">
+            <i class="fa-solid fa-bolt"></i>
+            <h4>Zero Buffer Times</h4>
+            <p>Cached track file architectures load local storage components instantly without networking latency spikes.</p>
+        </div>
+        <div class="benefit-item">
+            <i class="fa-solid fa-sliders"></i>
+            <h4>Exclusive Audio Controls</h4>
+            <p>Access advanced system sound configuration setups and customizable hotkey shortcut bindings.</p>
+        </div>
+    </section>
+
+</body>
+</html>
